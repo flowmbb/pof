@@ -1,0 +1,79 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/zioos/ss/main/flow"))()
+
+local gui = Library:create{
+    Theme = Library.Themes.Rust
+}
+
+local tp = gui:tab{
+    Icon = "rbxassetid://6034996695",
+    Name = "Auto Pickup"
+}
+
+
+tp:Button{
+    Name = "Snowflake(K)",
+    Description = nil,
+    Callback = function() 
+
+-- Create a global variable to store the player's initial position
+local initialPosition = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+
+-- Connect to the KeyDown event
+game.Players.LocalPlayer:GetMouse().KeyDown:Connect(function(KeyPressed)
+  -- Check if the "k" key was pressed
+  if KeyPressed == "k" then
+    -- Loop through all the children of the "GameDebris" object
+    for i,v in pairs(workspace.GameDebris:GetChildren()) do
+      -- Check if the child is a part with the name "WinterBreezeSnowflake"
+      if v:IsA("Part") and v.Name == "WinterBreezeSnowflake" then
+        -- Teleport the player to the part's position
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.CFrame
+        
+        -- Wait for 0.5 seconds
+        wait(0.4)
+        
+        -- Teleport the player back to their initial position
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = initialPosition
+      end
+    end
+  end
+end)
+
+end
+}
+
+tp:Button{
+    Name = "Gifts(C)",
+    Description = nil,
+    Callback = function() 
+        
+local giftBox = game.workspace.GameDebris.GiftBox
+local savedCFrame = nil
+local validTextureIds = {
+  "rbxassetid://1223053797",
+  "rbxassetid://6271379076",
+  "rbxassetid://190001518",
+  "rbxassetid://11496804920",
+}
+local player = game.Players.LocalPlayer
+
+local function onKeyPress(inputObject, gameProcessedEvent)
+  if inputObject.KeyCode == Enum.KeyCode.C then
+    local mesh = giftBox:FindFirstChild("Mesh")
+    if mesh and table.find(validTextureIds, mesh.TextureId) then
+      -- Save current location and teleport to GiftBox
+      savedCFrame = player.Character.HumanoidRootPart.CFrame
+      player.Character.HumanoidRootPart.CFrame = giftBox.CFrame
+
+      -- Teleport back after 0.3 seconds
+      wait(0.3)
+      player.Character.HumanoidRootPart.CFrame = savedCFrame
+      savedCFrame = nil
+    end
+  end
+end
+
+game:GetService("UserInputService").InputBegan:Connect(onKeyPress)
+
+end
+}
