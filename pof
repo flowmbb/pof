@@ -43,7 +43,7 @@ end
 }
 
 tp:Button{
-    Name = "Gifts(C)",
+    Name = "Gifts",
     Description = nil,
     Callback = function() 
         
