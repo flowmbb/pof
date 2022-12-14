@@ -57,23 +57,17 @@ local validTextureIds = {
 }
 local player = game.Players.LocalPlayer
 
-local function onKeyPress(inputObject, gameProcessedEvent)
-  if inputObject.KeyCode == Enum.KeyCode.C then
-    local mesh = giftBox:FindFirstChild("Mesh")
-    if mesh and table.find(validTextureIds, mesh.TextureId) then
-      -- Save current location and teleport to GiftBox
-      savedCFrame = player.Character.HumanoidRootPart.CFrame
-      player.Character.HumanoidRootPart.CFrame = giftBox.CFrame
+local mesh = giftBox:FindFirstChild("Mesh")
+if mesh and table.find(validTextureIds, mesh.TextureId) then
+  -- Save current location and teleport to GiftBox
+  savedCFrame = player.Character.HumanoidRootPart.CFrame
+  player.Character.HumanoidRootPart.CFrame = giftBox.CFrame
 
-      -- Teleport back after 0.3 seconds
-      wait(0.3)
-      player.Character.HumanoidRootPart.CFrame = savedCFrame
-      savedCFrame = nil
-    end
-  end
+  -- Teleport back after 0.3 seconds
+  wait(0.3)
+  player.Character.HumanoidRootPart.CFrame = savedCFrame
+  savedCFrame = nil
 end
-
-game:GetService("UserInputService").InputBegan:Connect(onKeyPress)
 
 end
 }
